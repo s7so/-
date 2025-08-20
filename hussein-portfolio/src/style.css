@@ -103,6 +103,10 @@ body {
   border: 1px solid rgba(255, 99, 132, 0.3);
   box-shadow: 0 18px 50px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.03);
   transform-style: preserve-3d;
+  top: 50%;
+  left: 50%;
+  pointer-events: none;
+  will-change: transform, opacity;
 }
 .problem-phrase { position: relative; text-align: center; font-weight: 600; color: var(--muted); opacity: 0; }
 .problem-phrase .phrase-text { position: relative; z-index: 1; }

@@ -22,7 +22,7 @@ if (!prefersReduced) {
   hookText.textContent = headline
 }
 
-// 2) Problem: polished CHAOS scene
+// 2) Problem: refined 2D scatter -> converge with pinning
 const chaosStage = document.getElementById('chaosStage')
 const chaosWord = 'CHAOS'
 const chaosCount = 14
@@ -37,49 +37,43 @@ for (let i = 0; i < chaosCount; i++) {
 }
 
 if (!prefersReduced) {
-  // Initial scatter with depth
+  // Initial 2D scatter from center with subtle rotation
   letters.forEach((el) => {
     gsap.set(el, {
-      x: gsap.utils.random(-40, 40, 1),
-      y: gsap.utils.random(-40, 40, 1),
-      z: gsap.utils.random(-180, 120, 1),
-      rotationX: gsap.utils.random(-40, 40, 1),
-      rotationY: gsap.utils.random(-40, 40, 1),
-      rotationZ: gsap.utils.random(-40, 40, 1),
-      opacity: gsap.utils.random(0.5, 0.9)
+      x: gsap.utils.random(-220, 220, 1),
+      y: gsap.utils.random(-140, 140, 1),
+      rotation: gsap.utils.random(-20, 20, 1),
+      opacity: gsap.utils.random(0.5, 0.85, 0.01)
     })
   })
 
-  const scatterTl = gsap.timeline({
+  const chaosTl = gsap.timeline({
     scrollTrigger: {
       trigger: '#problem',
-      start: 'top 35%',
-      end: '+=100%',
-      scrub: true
+      start: 'top top',
+      end: '+=160%',
+      scrub: true,
+      pin: true
     }
   })
 
-  // Orbit-like float, then converge into crisp CHAOS word in center
-  scatterTl.to(letters, {
-    x: (i) => Math.sin(i) * 120,
-    y: (i) => Math.cos(i) * 60,
-    z: (i) => (i % 2 ? -80 : 80),
-    rotationX: 0,
-    rotationY: 0,
-    rotationZ: (i) => (i % 2 ? -10 : 10),
-    stagger: { each: 0.04, from: 'random' },
-    ease: 'sine.inOut'
-  }).to(letters, {
-    x: (i) => (i % chaosWord.length) * 72 - (chaosWord.length - 1) * 36,
+  // drift a bit
+  chaosTl.to(letters, {
+    x: (i, el) => gsap.getProperty(el, 'x') + gsap.utils.random(-40, 40, 1),
+    y: (i, el) => gsap.getProperty(el, 'y') + gsap.utils.random(-26, 26, 1),
+    rotation: (i, el) => gsap.getProperty(el, 'rotation') + gsap.utils.random(-8, 8, 1),
+    ease: 'sine.inOut',
+    stagger: { each: 0.02, from: 'random' }
+  })
+  // converge into neat CHAOS row centered
+  .to(letters, {
+    x: (i) => (i % chaosWord.length) * 84 - (chaosWord.length - 1) * 42,
     y: 0,
-    z: 0,
-    rotationX: 0,
-    rotationY: 0,
-    rotationZ: 0,
-    scale: 1.06,
+    rotation: 0,
+    scale: 1.02,
     opacity: 1,
     ease: 'power3.out',
-    stagger: { each: 0.05, from: 'center' }
+    stagger: { each: 0.04, from: 'center' }
   })
 }
 
@@ -89,8 +83,8 @@ if (!prefersReduced) {
   const phraseTl = gsap.timeline({
     scrollTrigger: {
       trigger: '#problem',
-      start: 'center center',
-      end: 'bottom 60%',
+      start: 'top 20%',
+      end: 'bottom center',
       scrub: true
     }
   })
