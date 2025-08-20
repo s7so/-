@@ -78,18 +78,42 @@
       <section class="section proof" id="proof" aria-labelledby="proof-heading">
         <div class="container">
           <h2 id="proof-heading">See it in action.</h2>
-          <div class="work-grid">
-            <a class="work-card" href="#" target="_blank" rel="noopener noreferrer">
-              <div class="work-thumb">Project One</div>
-              <div class="work-meta">Interactive product page with GSAP</div>
+          <div class="work-filters" role="tablist" aria-label="Project filters">
+            <button class="filter-chip active" data-filter="all" role="tab" aria-selected="true">All</button>
+            <button class="filter-chip" data-filter="web" role="tab" aria-selected="false">Web</button>
+            <button class="filter-chip" data-filter="3d" role="tab" aria-selected="false">3D</button>
+            <button class="filter-chip" data-filter="book" role="tab" aria-selected="false">Book</button>
+          </div>
+          <div class="work-grid" data-tilt-scope>
+            <a class="work-card" href="#" target="_blank" rel="noopener noreferrer" data-category="web" data-accent="#8b5cf6">
+              <div class="work-media" aria-hidden="true"></div>
+              <div class="work-overlay" aria-hidden="true"></div>
+              <div class="work-content">
+                <h3 class="work-title">Interactive Product Journey</h3>
+                <p class="work-subtitle">GSAP ScrollTrigger + SVG micro-interactions</p>
+                <div class="work-tags"><span>GSAP</span><span>Scroll</span><span>SVG</span></div>
+                <div class="work-cta">View Case Study →</div>
+              </div>
             </a>
-            <a class="work-card" href="#" target="_blank" rel="noopener noreferrer">
-              <div class="work-thumb">Project Two</div>
-              <div class="work-meta">3D Portfolio with WebGL</div>
+            <a class="work-card" href="#" target="_blank" rel="noopener noreferrer" data-category="3d" data-accent="#22d3ee">
+              <div class="work-media" aria-hidden="true"></div>
+              <div class="work-overlay" aria-hidden="true"></div>
+              <div class="work-content">
+                <h3 class="work-title">3D Portfolio Experience</h3>
+                <p class="work-subtitle">WebGL scene with smooth route transitions</p>
+                <div class="work-tags"><span>WebGL</span><span>Three.js</span><span>GSAP</span></div>
+                <div class="work-cta">Explore Live →</div>
+              </div>
             </a>
-            <a class="work-card" href="#" target="_blank" rel="noopener noreferrer">
-              <div class="work-thumb">The Book</div>
-              <div class="work-meta">The Hussein Method (coming soon)</div>
+            <a class="work-card" href="#" target="_blank" rel="noopener noreferrer" data-category="book" data-accent="#22c55e">
+              <div class="work-media" aria-hidden="true"></div>
+              <div class="work-overlay" aria-hidden="true"></div>
+              <div class="work-content">
+                <h3 class="work-title">The Hussein Method</h3>
+                <p class="work-subtitle">A practical blueprint for adaptive delivery</p>
+                <div class="work-tags"><span>Process</span><span>Playbooks</span></div>
+                <div class="work-cta">Read Preview →</div>
+              </div>
             </a>
           </div>
         </div>

@@ -134,16 +134,55 @@ if (sizeCards.length) {
 
 // 5) Work: gentle rise-in on enter
 if (!prefersReduced) {
-  gsap.utils.toArray('.work-card').forEach((el) => {
+  const cards = gsap.utils.toArray('.work-card')
+  cards.forEach((el) => {
     gsap.from(el, {
       scrollTrigger: { trigger: el, start: 'top 90%' },
-      y: 16,
+      y: 20,
       opacity: 0,
       duration: 0.6,
       ease: 'power2.out'
     })
   })
+
+  // subtle parallax/tilt by mouse within grid scope
+  const tiltScope = document.querySelector('[data-tilt-scope]')
+  if (tiltScope) {
+    const maxTilt = 6
+    const updateTilt = (e) => {
+      const rect = tiltScope.getBoundingClientRect()
+      const cx = rect.left + rect.width / 2
+      const cy = rect.top + rect.height / 2
+      const dx = (e.clientX - cx) / (rect.width / 2)
+      const dy = (e.clientY - cy) / (rect.height / 2)
+      cards.forEach((card) => {
+        const accent = card.getAttribute('data-accent') || 'rgba(139,92,246,0.35)'
+        gsap.to(card, { rotateY: dx * maxTilt, rotateX: -dy * maxTilt, transformPerspective: 800, duration: 0.4, ease: 'power2.out' })
+        gsap.to(card.querySelector('.work-media'), { background: `radial-gradient(650px 220px at ${50 + dx * 20}% ${-10 + dy * 10}%, ${accent}, transparent 60%)`, duration: 0.4, ease: 'power2.out' })
+      })
+    }
+    const resetTilt = () => {
+      cards.forEach((card) => {
+        gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.5, ease: 'power2.out' })
+        gsap.to(card.querySelector('.work-media'), { background: 'radial-gradient(600px 180px at 50% -10%, rgba(255,255,255,0.08), transparent 60%)', duration: 0.5 })
+      })
+    }
+    tiltScope.addEventListener('mousemove', updateTilt)
+    tiltScope.addEventListener('mouseleave', resetTilt)
+  }
 }
+
+// Filters
+const filterChips = Array.from(document.querySelectorAll('.filter-chip'))
+const workCards = Array.from(document.querySelectorAll('.work-card'))
+const setFilter = (key) => {
+  filterChips.forEach((b) => b.classList.toggle('active', b.dataset.filter === key))
+  workCards.forEach((card) => {
+    const show = key === 'all' || card.dataset.category === key
+    gsap.to(card, { opacity: show ? 1 : 0.12, scale: show ? 1 : 0.98, duration: 0.35, ease: 'power2.out', pointerEvents: show ? 'auto' : 'none' })
+  })
+}
+filterChips.forEach((btn) => btn.addEventListener('click', () => setFilter(btn.dataset.filter)))
 
 // 6) CTA: stagger in socials
 if (!prefersReduced) {
