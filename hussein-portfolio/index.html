@@ -75,6 +75,189 @@
         </div>
       </section>
 
+      <section class="section phases" id="phases" aria-labelledby="phases-heading">
+        <div class="container">
+          <h2 id="phases-heading" class="phases-title"><span class="shimmer">The Hussein Method — Phases</span></h2>
+          <div class="phase-tabs" role="tablist" aria-label="Method phases">
+            <button class="phase-chip active" role="tab" aria-selected="true" data-phase="0">Phase 0 — Project Setup</button>
+            <button class="phase-chip" role="tab" aria-selected="false" data-phase="1" disabled>Phase 1 — Coming soon</button>
+            <button class="phase-chip" role="tab" aria-selected="false" data-phase="2" disabled>Phase 2 — Coming soon</button>
+          </div>
+
+          <div class="phase-panel active" data-phase="0">
+            <div class="phase-header">
+              <div class="phase-badge">Phase 0</div>
+              <h3 class="phase-heading">Project Setup</h3>
+              <div class="phase-chip subtle">DoR Required</div>
+            </div>
+
+            <div class="phase-grid">
+              <aside class="phase-nav" aria-label="Phase 0 sections">
+                <nav>
+                  <a href="#m00">0.0 - Metadata</a>
+                  <a href="#m01">0.1 - Problem Statement</a>
+                  <a href="#m02">0.2 - Value Proposition</a>
+                  <a href="#m03">0.3 - Success Metrics (KPIs)</a>
+                  <a href="#m04">0.4 - Roles & RACI</a>
+                  <a href="#m05">0.5 - Prioritization</a>
+                  <a href="#m06">0.6 - Security & Privacy</a>
+                  <a href="#m07">0.7 - Data Retention & Privacy</a>
+                  <a href="#m08">0.8 - Risk Register</a>
+                  <a href="#m09">0.9 - Time-Box</a>
+                  <a href="#m10">0.10 - Definition of Ready</a>
+                </nav>
+              </aside>
+
+              <div class="phase-content">
+                <section class="phase-card" id="m00" aria-labelledby="m00-h">
+                  <h4 id="m00-h" class="phase-card-title">0.0 - Metadata</h4>
+                  <dl class="meta-grid">
+                    <div><dt>Project name</dt><dd>—</dd></div>
+                    <div><dt>Repository</dt><dd>—</dd></div>
+                    <div><dt>Owner / Sponsor</dt><dd>—</dd></div>
+                    <div><dt>Start date</dt><dd>—</dd></div>
+                    <div><dt>Target release (MVP)</dt><dd>—</dd></div>
+                  </dl>
+                </section>
+
+                <section class="phase-card" id="m01" aria-labelledby="m01-h">
+                  <h4 id="m01-h" class="phase-card-title">0.1 - Problem Statement</h4>
+                  <ul class="bullets">
+                    <li><strong>ما المشكلة؟</strong> — اكتبها بوضوح.</li>
+                    <li><strong>لماذا الآن؟</strong> — سبب الإلحاح أو الفرصة.</li>
+                    <li><strong>من سيستفيد؟</strong> — وصف موجز للفئة المستهدفة.</li>
+                  </ul>
+                </section>
+
+                <section class="phase-card" id="m02" aria-labelledby="m02-h">
+                  <h4 id="m02-h" class="phase-card-title">0.2 - Value Proposition</h4>
+                  <p class="one-liner">جملة واحدة تشرح القيمة للمستخدم (طفل 10 سنوات).</p>
+                </section>
+
+                <section class="phase-card" id="m03" aria-labelledby="m03-h">
+                  <h4 id="m03-h" class="phase-card-title">0.3 - Success Metrics (KPIs)</h4>
+                  <ul class="kpis">
+                    <li><strong>KPI‑1 (Usage):</strong> %DAU/MAU أو عدد المستخدمين النشطين خلال 7 أيام.</li>
+                    <li><strong>KPI‑2 (Performance):</strong> median API latency ≤ 200 ms.</li>
+                    <li><strong>KPI‑3 (Reliability):</strong> SLO مثال: 99.9% availability per 30 days.</li>
+                    <li><strong>KPI‑4 (Business):</strong> conversion rate أو retention.</li>
+                  </ul>
+                  <p class="note">أضف قيماً عددية واضحة لكل KPI حسب المنتج.</p>
+                </section>
+
+                <section class="phase-card" id="m04" aria-labelledby="m04-h">
+                  <h4 id="m04-h" class="phase-card-title">0.4 - Roles & RACI (اساس القرار)</h4>
+                  <div class="table-wrap">
+                    <table class="raci">
+                      <thead>
+                        <tr><th>Role</th><th>مثال (اسم/وظيفة)</th><th>RACI</th></tr>
+                      </thead>
+                      <tbody>
+                        <tr><td>Product Owner (PO)</td><td>اسم/Role</td><td>A (يوقّع على Vision وScope)</td></tr>
+                        <tr><td>Tech Lead / Architect</td><td>اسم/Role</td><td>A/R (يقرر التصميم والـ DoD التقنية)</td></tr>
+                        <tr><td>Developer(s)</td><td>فريق التطوير</td><td>R (ينفّذ الـ tasks)</td></tr>
+                        <tr><td>QA / Tester</td><td>اسم/Role</td><td>R (اختبارات + قبول قصص)</td></tr>
+                        <tr><td>DevOps / SRE</td><td>اسم/Role</td><td>C/R (CI/CD, monitoring, SLOs)</td></tr>
+                        <tr><td>Security Reviewer</td><td>اسم/Role</td><td>C (تفحّص الأمن، approve security gates)</td></tr>
+                        <tr><td>UX / Designer</td><td>اسم/Role</td><td>C (تصميم وAccessibility)</td></tr>
+                        <tr><td>Stakeholder / PM</td><td>اسم/Role</td><td>I (مُطّلع على التقدّم)</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <ul class="rules">
+                    <li>أي تغيّر على الـ DoD أو SLO يجب أن يوافق عليه PO + Tech Lead + SRE.</li>
+                    <li>تغييرات النطاق الكبيرة (≥ 20% effort) تحتاج Sign‑off من Sponsor.</li>
+                  </ul>
+                </section>
+
+                <section class="phase-card" id="m05" aria-labelledby="m05-h">
+                  <h4 id="m05-h" class="phase-card-title">0.5 - Prioritization (مصفوفة قرار سريعة)</h4>
+                  <div class="split">
+                    <div>
+                      <h5>RICE (Recommended)</h5>
+                      <ul class="bullets tight">
+                        <li><strong>Reach (R):</strong> عدد المستخدمين المتأثرين خلال فترة.</li>
+                        <li><strong>Impact (I):</strong> (3 = كبير، 2 = متوسط، 1 = صغير).</li>
+                        <li><strong>Confidence (C):</strong> % الثقة في التقدير.</li>
+                        <li><strong>Effort (E):</strong> شخص‑أسبوع.</li>
+                      </ul>
+                      <p class="formula">RICE score = (R × I × C) / E</p>
+                    </div>
+                    <div>
+                      <h5>Betting table (Shape‑Up)</h5>
+                      <div class="table-wrap">
+                        <table class="betting">
+                          <thead>
+                            <tr><th>Bet</th><th>Owner</th><th>Scope summary</th><th>Appetite</th><th>Confidence</th><th>Decision</th></tr>
+                          </thead>
+                          <tbody>
+                            <tr><td>Bet‑01</td><td>PO</td><td>Feature X short pitch</td><td>2 weeks</td><td>High</td><td>✅</td></tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <p class="note">استخدم RICE للعناصر الكثيرة والمجدولة؛ وBetting table للرهانات الكبيرة في الدورة.</p>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="phase-card" id="m06" aria-labelledby="m06-h">
+                  <h4 id="m06-h" class="phase-card-title">0.6 - Security & Privacy Quick‑Check (DoR must‑have)</h4>
+                  <p class="note">أجب نعم/لا وعلّم مَن يتحمّل التنفيذ إذا لا.</p>
+                  <ul class="checklist">
+                    <li>تحديد حساسية البيانات (PII)؟ — <em>Yes/No</em></li>
+                    <li>قائمة dependencies مُحدّثة ومسحوبة عبر SCA؟ — <em>Yes/No</em></li>
+                    <li>متطلبات تشفير (at‑rest / in‑transit)؟ — <em>Yes/No</em></li>
+                    <li>خطة pen‑test قبل الإصدار العام؟ — <em>Yes/No</em></li>
+                    <li>OWASP Top‑10 ضمن acceptance gate للـ Web/API؟ — <em>Yes/No</em></li>
+                  </ul>
+                  <p class="note">ضع إجراءات تصحيح (mitigations) لكل عنصر "No".</p>
+                </section>
+
+                <section class="phase-card" id="m07" aria-labelledby="m07-h">
+                  <h4 id="m07-h" class="phase-card-title">0.7 - Data Retention & Privacy</h4>
+                  <ul class="bullets">
+                    <li><strong>Retention policy:</strong> مثال: سجلات المستخدمين: 2 سنة؛ سجلات الاستخدام: 90 يوم.</li>
+                    <li><strong>Privacy notes:</strong> هل البيانات ستُخزن خارج المنطقة؟ هل تحتاج توافق GDPR / local law؟</li>
+                  </ul>
+                </section>
+
+                <section class="phase-card" id="m08" aria-labelledby="m08-h">
+                  <h4 id="m08-h" class="phase-card-title">0.8 - Risk Register (موجز)</h4>
+                  <div class="table-wrap">
+                    <table class="risk">
+                      <thead>
+                        <tr><th>Risk</th><th>Impact (1‑5)</th><th>Likelihood (1‑5)</th><th>Owner</th><th>Mitigation</th></tr>
+                      </thead>
+                      <tbody>
+                        <tr><td>Missing SSO requirement</td><td>4</td><td>3</td><td>PO</td><td>تحديد requirement قبل Phase‑2</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
+
+                <section class="phase-card" id="m09" aria-labelledby="m09-h">
+                  <h4 id="m09-h" class="phase-card-title">0.9 - Time‑Box (اقتراح)</h4>
+                  <div class="callout">
+                    إعداد Phase‑0: <strong>30–45 دقيقة</strong> (جلسة سريعة مع PO + Tech Lead).
+                  </div>
+                </section>
+
+                <section class="phase-card" id="m10" aria-labelledby="m10-h">
+                  <h4 id="m10-h" class="phase-card-title">0.10 - Definition of Ready (DoR)</h4>
+                  <ul class="checklist">
+                    <li>Problem statement مكتوبة.</li>
+                    <li>RACI مع أسماء مذكورة أو roles مغطّاة.</li>
+                    <li>أهم KPIs محددة.</li>
+                    <li>Security quick‑check: جميع البنود الحرجة إمّا Yes أو Mitigation.</li>
+                    <li>Prioritization method مُحددة (RICE / Betting).</li>
+                  </ul>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="section proof" id="proof" aria-labelledby="proof-heading">
         <div class="container">
           <h2 id="proof-heading">See it in action.</h2>

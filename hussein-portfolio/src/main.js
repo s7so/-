@@ -225,3 +225,32 @@ if (!prefersReduced) {
     }
   )
 }
+
+// 7) Phases: reveal cards on enter and scrollspy for nav
+if (!prefersReduced) {
+  gsap.utils.toArray('.phase-card').forEach((card) => {
+    gsap.to(card, {
+      scrollTrigger: { trigger: card, start: 'top 85%' },
+      opacity: 1,
+      y: 0,
+      duration: 0.5,
+      ease: 'power2.out'
+    })
+  })
+}
+
+const phaseNavLinks = Array.from(document.querySelectorAll('.phase-nav a'))
+const phaseSections = phaseNavLinks.map((a) => document.querySelector(a.getAttribute('href')))
+const setActiveNav = () => {
+  const scrollY = window.scrollY + 120
+  for (let i = 0; i < phaseSections.length; i++) {
+    const sec = phaseSections[i]
+    if (!sec) continue
+    const top = sec.offsetTop
+    const bottom = top + sec.offsetHeight
+    const isActive = scrollY >= top && scrollY < bottom
+    phaseNavLinks[i].classList.toggle('active', isActive)
+  }
+}
+window.addEventListener('scroll', setActiveNav)
+setActiveNav()
