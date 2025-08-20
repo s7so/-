@@ -22,47 +22,80 @@ if (!prefersReduced) {
   hookText.textContent = headline
 }
 
-// 2) Problem: CHAOS letters converge to phrase
-const chaosGrid = document.getElementById('chaosGrid')
-const chaosLetters = 'CHAOS'.split('')
-const totalCells = 18
-for (let i = 0; i < totalCells; i++) {
-  const cell = document.createElement('div')
-  cell.className = 'chaos-cell'
-  cell.textContent = chaosLetters[i % chaosLetters.length]
-  chaosGrid.appendChild(cell)
+// 2) Problem: polished CHAOS scene
+const chaosStage = document.getElementById('chaosStage')
+const chaosWord = 'CHAOS'
+const chaosCount = 14
+const letters = []
+
+for (let i = 0; i < chaosCount; i++) {
+  const letter = document.createElement('div')
+  letter.className = 'chaos-letter'
+  letter.textContent = chaosWord[i % chaosWord.length]
+  chaosStage.appendChild(letter)
+  letters.push(letter)
 }
 
-const cells = gsap.utils.toArray('.chaos-cell')
-
 if (!prefersReduced) {
+  // Initial scatter with depth
+  letters.forEach((el) => {
+    gsap.set(el, {
+      x: gsap.utils.random(-40, 40, 1),
+      y: gsap.utils.random(-40, 40, 1),
+      z: gsap.utils.random(-180, 120, 1),
+      rotationX: gsap.utils.random(-40, 40, 1),
+      rotationY: gsap.utils.random(-40, 40, 1),
+      rotationZ: gsap.utils.random(-40, 40, 1),
+      opacity: gsap.utils.random(0.5, 0.9)
+    })
+  })
+
   const scatterTl = gsap.timeline({
     scrollTrigger: {
       trigger: '#problem',
-      start: 'top center',
-      end: '+=80%',
+      start: 'top 35%',
+      end: '+=100%',
       scrub: true
     }
   })
 
-  scatterTl.fromTo(
-    cells,
-    { xPercent: () => gsap.utils.random(-120, 120), yPercent: () => gsap.utils.random(-120, 120), rotate: () => gsap.utils.random(-50, 50), opacity: 0.2 },
-    { xPercent: 0, yPercent: 0, rotate: 0, opacity: 1, stagger: 0.05, ease: 'power2.out' }
-  )
+  // Orbit-like float, then converge into crisp CHAOS word in center
+  scatterTl.to(letters, {
+    x: (i) => Math.sin(i) * 120,
+    y: (i) => Math.cos(i) * 60,
+    z: (i) => (i % 2 ? -80 : 80),
+    rotationX: 0,
+    rotationY: 0,
+    rotationZ: (i) => (i % 2 ? -10 : 10),
+    stagger: { each: 0.04, from: 'random' },
+    ease: 'sine.inOut'
+  }).to(letters, {
+    x: (i) => (i % chaosWord.length) * 72 - (chaosWord.length - 1) * 36,
+    y: 0,
+    z: 0,
+    rotationX: 0,
+    rotationY: 0,
+    rotationZ: 0,
+    scale: 1.06,
+    opacity: 1,
+    ease: 'power3.out',
+    stagger: { each: 0.05, from: 'center' }
+  })
 }
 
 const problemPhrase = document.querySelector('.problem-phrase')
+const phraseUnderline = document.querySelector('.phrase-underline')
 if (!prefersReduced) {
-  gsap.to(problemPhrase, {
+  const phraseTl = gsap.timeline({
     scrollTrigger: {
       trigger: '#problem',
-      start: 'top 20%',
-      end: 'bottom center',
+      start: 'center center',
+      end: 'bottom 60%',
       scrub: true
-    },
-    opacity: 1
+    }
   })
+  phraseTl.to(problemPhrase, { opacity: 1, duration: 0.6, ease: 'power2.out' })
+          .to(phraseUnderline, { width: '64%', opacity: 1, duration: 0.6, ease: 'power2.out' }, '-=0.3')
 }
 
 // 3) Solution: map icon reveal and tagline

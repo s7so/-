@@ -86,22 +86,27 @@ body {
 
 /* Problem */
 .problem { background: var(--bg); }
-.chaos-container { position: relative; height: 60vh; }
-.chaos-grid { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(6, 1fr); grid-auto-rows: 1fr; gap: 16px; }
-.chaos-cell {
-  display: grid; place-items: center;
-  border: 1px dashed rgba(148,163,184,0.25);
-  background: rgba(30,41,59,0.3);
-  color: #f87171;
-  font-weight: 800;
-  font-size: clamp(24px, 5vw, 64px);
+.chaos-stage { position: relative; height: 72vh; perspective: 800px; }
+.chaos-letter {
+  position: absolute;
+  display: inline-grid;
+  place-items: center;
+  width: clamp(60px, 9vw, 110px);
+  height: clamp(60px, 9vw, 110px);
+  border-radius: 14px;
+  color: #fda4af;
+  font-weight: 900;
+  font-size: clamp(32px, 6vw, 64px);
+  letter-spacing: 2px;
+  text-shadow: 0 8px 26px rgba(255, 99, 132, 0.35);
+  background: linear-gradient(180deg, rgba(255, 99, 132, 0.18), rgba(255, 99, 132, 0.06));
+  border: 1px solid rgba(255, 99, 132, 0.3);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.03);
+  transform-style: preserve-3d;
 }
-.problem-phrase {
-  text-align: center;
-  font-weight: 600;
-  color: var(--muted);
-  opacity: 0;
-}
+.problem-phrase { position: relative; text-align: center; font-weight: 600; color: var(--muted); opacity: 0; }
+.problem-phrase .phrase-text { position: relative; z-index: 1; }
+.phrase-underline { display: block; height: 3px; width: 0%; margin: 10px auto 0; background: linear-gradient(90deg, var(--accent), var(--accent-2)); border-radius: 999px; opacity: 0; }
 
 /* Solution */
 .solution { background: linear-gradient(180deg, rgba(139,92,246,0.1), rgba(34,211,238,0.06) 40%, transparent); }
