@@ -247,6 +247,8 @@ const tabsContainer = phasesSection?.querySelector('.phase-tabs')
 // Update Phase 1 tab label if placeholder
 const phase1Tab = tabsContainer?.querySelector('[data-phase="1"]')
 if (phase1Tab) phase1Tab.removeAttribute('disabled')
+const phase2Tab = tabsContainer?.querySelector('[data-phase="2"]')
+if (phase2Tab) phase2Tab.removeAttribute('disabled')
 
 // Tab switching
 const getPhasePanels = () => Array.from(phasesSection.querySelectorAll('.phase-panel'))

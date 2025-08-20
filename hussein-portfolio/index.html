@@ -81,7 +81,7 @@
           <div class="phase-tabs" role="tablist" aria-label="Method phases">
             <button class="phase-chip active" role="tab" aria-selected="true" data-phase="0">Phase 0 — Project Setup</button>
             <button class="phase-chip" role="tab" aria-selected="false" data-phase="1">Phase 1 — Idea Autopsy</button>
-            <button class="phase-chip" role="tab" aria-selected="false" data-phase="2" disabled>Phase 2 — Coming soon</button>
+            <button class="phase-chip" role="tab" aria-selected="false" data-phase="2">Phase 2 — Data Mindset</button>
           </div>
 
           <div class="phase-panel active" data-phase="0">
@@ -416,6 +416,248 @@
                     <li><code>templates/prioritization/rice-template.md</code> (حيث تحسب RICE لكل backlog item).</li>
                     <li><code>security/snyk-dependabot.md</code> (خطوات تشغيل SCA).</li>
                   </ul>
+                </section>
+              </div>
+            </div>
+          </div>
+          <div class="phase-panel" data-phase="2">
+            <div class="phase-header">
+              <div class="phase-badge">Phase 2</div>
+              <h3 class="phase-heading">Data Mindset</h3>
+              <div class="phase-chip subtle">From Inputs to SLOs</div>
+            </div>
+
+            <div class="phase-grid">
+              <aside class="phase-nav" aria-label="Phase 2 sections">
+                <nav>
+                  <a href="#d20">2.0 - Input Specification</a>
+                  <a href="#d21">2.1 - Entity / Data Model</a>
+                  <a href="#d22">2.2 - Relationships</a>
+                  <a href="#d23">2.3 - SQL Schema Example</a>
+                  <a href="#d24">2.4 - NFR (Data & Performance)</a>
+                  <a href="#d25">2.5 - SLI / SLO</a>
+                  <a href="#d26">2.6 - Monitoring & Alerts</a>
+                  <a href="#d27">2.7 - Caching Strategy</a>
+                  <a href="#d28">2.8 - Backup & DR</a>
+                  <a href="#d29">2.9 - Retention & Archiving</a>
+                  <a href="#d210">2.10 - Privacy & Compliance</a>
+                  <a href="#d211">2.11 - Access Control & Security</a>
+                  <a href="#d212">2.12 - Migration Strategy</a>
+                  <a href="#d213">2.13 - Data Quality</a>
+                  <a href="#d214">2.14 - Dev Experience</a>
+                  <a href="#d215">2.15 - Time‑Box</a>
+                  <a href="#d216">2.16 - DoR</a>
+                  <a href="#d2sign">Quick sign‑off</a>
+                </nav>
+              </aside>
+
+              <div class="phase-content">
+                <section class="phase-card" id="d20" aria-labelledby="d20-h">
+                  <h4 id="d20-h" class="phase-card-title">2.0 – Input Specification (قابل للنسخ)</h4>
+                  <div class="table-wrap">
+                    <table class="inventory">
+                      <thead>
+                        <tr><th>#</th><th>الحقل</th><th>النوع</th><th>قيود</th><th>مثال</th><th>Tags</th></tr>
+                      </thead>
+                      <tbody>
+                        <tr><td>1</td><td><code>name</code></td><td>String</td><td>مطلوب، ≤100 char</td><td>"محمد"</td><td>#personal</td></tr>
+                        <tr><td>2</td><td><code>amount</code></td><td>Decimal(10,2)</td><td>مطلوب، >0</td><td>125.50</td><td>#financial</td></tr>
+                        <tr><td>3</td><td><code>date</code></td><td>Date (ISO)</td><td>مطلوب، ≤ اليوم</td><td>2025-08-07</td><td>#temporal</td></tr>
+                        <tr><td>4</td><td><code>category_id</code></td><td>UUID</td><td>موجود في <code>Category</code></td><td>"c1-..."</td><td>#ref</td></tr>
+                        <tr><td>5</td><td><code>notes</code></td><td>String</td><td>اختياري، ≤500 char</td><td>"قهوة"</td><td>#optional</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <ul class="bullets">
+                    <li>أنواع صارمة، استخدام JSON Schema أو ORM validators.</li>
+                    <li>تحقق من حدود الأرقام وتوحيد الوقت (UTC) أو تخزين timezone.</li>
+                  </ul>
+                </section>
+
+                <section class="phase-card" id="d21" aria-labelledby="d21-h">
+                  <h4 id="d21-h" class="phase-card-title">2.1 – Entity / Data Model (ER)</h4>
+                  <p><strong>Entity: Expense</strong><br/><code>Expense { id UUID PK, user_id UUID FK -> User.id #PII?, name String, amount Decimal, date Date, category_id UUID FK, created_at Timestamp, updated_at Timestamp }</code></p>
+                  <p><strong>Entity: Category</strong><br/><code>Category { id UUID PK, name String UNIQUE }</code></p>
+                  <p class="note">علّم الحقول الحساسة بـ <code>#PII</code> أو <code>#sensitive</code>. أي جدول يحتوي <code>user_id</code> يخضع لسياسة وصول.</p>
+                </section>
+
+                <section class="phase-card" id="d22" aria-labelledby="d22-h">
+                  <h4 id="d22-h" class="phase-card-title">2.2 – Relationships</h4>
+                  <ul class="bullets">
+                    <li>Expense → Category : Many‑to‑One.</li>
+                    <li>User → Expense : One‑to‑Many.</li>
+                  </ul>
+                </section>
+
+                <section class="phase-card" id="d23" aria-labelledby="d23-h">
+                  <h4 id="d23-h" class="phase-card-title">2.3 – SQL Schema Example (Postgres)</h4>
+                  <pre class="codeblock"><code>CREATE TABLE users (
+  id UUID PRIMARY KEY,
+  email TEXT UNIQUE NOT NULL,
+  name TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
+CREATE TABLE categories (
+  id UUID PRIMARY KEY,
+  name TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE expenses (
+  id UUID PRIMARY KEY,
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  name TEXT NOT NULL,
+  amount NUMERIC(10,2) NOT NULL CHECK (amount > 0),
+  date DATE NOT NULL,
+  category_id UUID REFERENCES categories(id),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
+CREATE INDEX idx_expenses_user_date ON expenses(user_id, date);</code></pre>
+                  <ul class="bullets">
+                    <li>Index على <code>(user_id, date)</code> لقراءات سريعة.</li>
+                    <li>فكّر في partitioning حسب <code>date</code> إذا كان العدد كبيراً.</li>
+                  </ul>
+                </section>
+
+                <section class="phase-card" id="d24" aria-labelledby="d24-h">
+                  <h4 id="d24-h" class="phase-card-title">2.4 – NFR (Data & Performance)</h4>
+                  <div class="table-wrap">
+                    <table class="risk">
+                      <thead>
+                        <tr><th>الفئة</th><th>المتطلب</th><th>مقياس</th><th>ملاحظة</th></tr>
+                      </thead>
+                      <tbody>
+                        <tr><td>Performance</td><td>API read latency (p50)</td><td>≤ 120 ms</td><td>under typical load</td></tr>
+                        <tr><td>Scalability</td><td>DB size</td><td>يدعم 10M+ records</td><td>partition + archiving</td></tr>
+                        <tr><td>Consistency</td><td>Transactional safety</td><td>ACID for writes</td><td>DB transactions</td></tr>
+                        <tr><td>Security</td><td>Data access control</td><td>RBAC enforced</td><td>RLS إذا مطلوب</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
+
+                <section class="phase-card" id="d25" aria-labelledby="d25-h">
+                  <h4 id="d25-h" class="phase-card-title">2.5 – SLI / SLO</h4>
+                  <ul class="bullets">
+                    <li><code>GET /expenses</code> availability SLO: 99.9%.</li>
+                    <li><code>POST /expenses</code> latency SLO: p95 ≤ 300 ms.</li>
+                  </ul>
+                  <p class="note"><strong>Error budget:</strong> إذا تم تجاوز الميزانية، فعّل freeze وتأجيل ميزات غير حرجة.</p>
+                </section>
+
+                <section class="phase-card" id="d26" aria-labelledby="d26-h">
+                  <h4 id="d26-h" class="phase-card-title">2.6 – Monitoring & Alerts</h4>
+                  <ul class="bullets">
+                    <li>Request rate (rps) لكل endpoint.</li>
+                    <li>Error rate (5xx) — threshold: >1% over 5m.</li>
+                    <li>Latency p50/p95/p99 — alert إذا p95 > 500ms لمدّة 10m.</li>
+                    <li>DB slow queries — >200ms.</li>
+                    <li>SLO burn rate — alert إذا burn rate > 14x لساعة.</li>
+                  </ul>
+                  <p class="note">استخدم Prometheus + Grafana + Alertmanager، أضف Sentry.</p>
+                </section>
+
+                <section class="phase-card" id="d27" aria-labelledby="d27-h">
+                  <h4 id="d27-h" class="phase-card-title">2.7 – Caching Strategy</h4>
+                  <ul class="bullets">
+                    <li>Cache <code>GET /categories</code> بـ TTL 1h (Redis).</li>
+                    <li>Per‑user cache للتجميعة المكلفة (30s) مع invalidate عند الكتابة.</li>
+                  </ul>
+                </section>
+
+                <section class="phase-card" id="d28" aria-labelledby="d28-h">
+                  <h4 id="d28-h" class="phase-card-title">2.8 – Backup & Restore / DR</h4>
+                  <ul class="bullets">
+                    <li>Full nightly backup + WAL archiving.</li>
+                    <li>اختبار الاستعادة شهريًا. RTO ≤ 1h، RPO ≤ 15m.</li>
+                  </ul>
+                </section>
+
+                <section class="phase-card" id="d29" aria-labelledby="d29-h">
+                  <h4 id="d29-h" class="phase-card-title">2.9 – Data Retention & Archiving</h4>
+                  <ul class="bullets">
+                    <li>سجلات مالية نشطة: سنتان في DB الأساسية.</li>
+                    <li>أرشف الأقدم إلى Parquet على S3، وإمكانية rehydrate.</li>
+                  </ul>
+                </section>
+
+                <section class="phase-card" id="d210" aria-labelledby="d210-h">
+                  <h4 id="d210-h" class="phase-card-title">2.10 – Privacy & Compliance</h4>
+                  <ul class="bullets">
+                    <li>تصنيف البيانات: PII, Financial, System.</li>
+                    <li>Right to be forgotten: سياسات حذف/إخفاء.</li>
+                    <li>Audit log مُجزّأ بدون بيانات حساسة كاملة.</li>
+                  </ul>
+                </section>
+
+                <section class="phase-card" id="d211" aria-labelledby="d211-h">
+                  <h4 id="d211-h" class="phase-card-title">2.11 – Access Control & Security</h4>
+                  <ul class="bullets">
+                    <li>RBAC وRLS (Postgres) عند الحاجة.</li>
+                    <li>Parameterized queries / ORM.</li>
+                    <li>Secrets management + key rotation.</li>
+                  </ul>
+                </section>
+
+                <section class="phase-card" id="d212" aria-labelledby="d212-h">
+                  <h4 id="d212-h" class="phase-card-title">2.12 – Migration Strategy</h4>
+                  <ul class="bullets">
+                    <li>Migrations (Flyway / Liquibase / TypeORM).</li>
+                    <li>Backward compatible: add nullable → backfill → enforce.</li>
+                    <li>Feature flags + rollback plan.</li>
+                  </ul>
+                </section>
+
+                <section class="phase-card" id="d213" aria-labelledby="d213-h">
+                  <h4 id="d213-h" class="phase-card-title">2.13 – Data Quality & Observability</h4>
+                  <ul class="bullets">
+                    <li>Job شهري للتحقق من العلاقات.</li>
+                    <li>Dashboard: null rates, duplicates, orphaned FKs.</li>
+                    <li>Alert إذا >1% سجلات جديدة تفشل التحقق.</li>
+                  </ul>
+                </section>
+
+                <section class="phase-card" id="d214" aria-labelledby="d214-h">
+                  <h4 id="d214-h" class="phase-card-title">2.14 – Dev Experience</h4>
+                  <ul class="bullets">
+                    <li><code>docs/data-model.md</code> (ER + privacy).</li>
+                    <li><code>src/models/expense.model.ts</code> (ORM example).</li>
+                    <li><code>migrations/</code> (example migration).</li>
+                    <li><code>templates/slo/sli-slo-template.md</code>.</li>
+                  </ul>
+                </section>
+
+                <section class="phase-card" id="d215" aria-labelledby="d215-h">
+                  <h4 id="d215-h" class="phase-card-title">2.15 – Time‑Box (اقتراح)</h4>
+                  <ul class="bullets">
+                    <li>Input Spec: <strong>15–20 دقيقة</strong>.</li>
+                    <li>ER + Indexing plan: <strong>30–45 دقيقة</strong>.</li>
+                    <li>SLO & Monitoring plan: <strong>30 دقيقة</strong>.</li>
+                  </ul>
+                </section>
+
+                <section class="phase-card" id="d216" aria-labelledby="d216-h">
+                  <h4 id="d216-h" class="phase-card-title">2.16 – Definition of Ready (DoR)</h4>
+                  <ul class="checklist">
+                    <li>كل الحقول المطلوبة مُعرَّفة مع القيود والنماذج.</li>
+                    <li>ER diagram مُحمل في <code>docs/</code>.</li>
+                    <li>SLOs لكل API رئيسي.</li>
+                    <li>خطة retention & backup موثّقة.</li>
+                  </ul>
+                </section>
+
+                <section class="phase-card" id="d2sign" aria-labelledby="d2sign-h">
+                  <h4 id="d2sign-h" class="phase-card-title">Quick sign‑off & next steps</h4>
+                  <div class="table-wrap">
+                    <table class="signoff">
+                      <tbody>
+                        <tr><td>PO:</td><td>__________ (date)</td></tr>
+                        <tr><td>Tech Lead:</td><td>__________ (date)</td></tr>
+                        <tr><td>SRE:</td><td>__________ (date)</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </section>
               </div>
             </div>
