@@ -30,7 +30,7 @@
 
       <section class="section solution" id="solution" aria-labelledby="solution-heading">
         <div class="container solution-inner">
-          <h2 id="solution-heading" class="solution-question">But what if we had a map?</h2>
+          <h2 id="solution-heading" class="solution-question"><span class="shimmer">But what if we had a map?</span><span class="question-underline"></span></h2>
           <div class="map-icon" aria-hidden="true">
             <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Simple map icon">
               <defs>
@@ -40,10 +40,10 @@
                 </linearGradient>
               </defs>
               <rect x="10" y="10" width="180" height="100" rx="8" fill="url(#paper)" stroke="#4b5563"/>
-              <polyline points="30,20 60,30 100,18 140,28 170,20" fill="none" stroke="#8b5cf6" stroke-width="2"/>
-              <polyline points="30,60 60,70 100,58 140,68 170,60" fill="none" stroke="#22d3ee" stroke-width="2"/>
-              <circle cx="62" cy="72" r="4" fill="#22d3ee"/>
-              <circle cx="140" cy="28" r="4" fill="#8b5cf6"/>
+              <polyline class="route route-purple" points="30,20 60,30 100,18 140,28 170,20" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round"/>
+              <polyline class="route route-cyan" points="30,60 60,70 100,58 140,68 170,60" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round"/>
+              <circle class="poi poi-cyan" cx="62" cy="72" r="4" fill="#22d3ee"/>
+              <circle class="poi poi-purple" cx="140" cy="28" r="4" fill="#8b5cf6"/>
             </svg>
           </div>
           <p class="method-tagline">The Hussein Method: An Adaptive Framework</p>

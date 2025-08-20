@@ -95,6 +95,8 @@ if (!prefersReduced) {
 // 3) Solution: map icon reveal and tagline
 const mapIcon = document.querySelector('.map-icon')
 const methodTagline = document.querySelector('.method-tagline')
+const shimmer = document.querySelector('.solution-question .shimmer')
+const questionUnderline = document.querySelector('.solution-question .question-underline')
 
 if (!prefersReduced) {
   const solTl = gsap.timeline({
@@ -105,8 +107,23 @@ if (!prefersReduced) {
       scrub: true
     }
   })
-  solTl.to(mapIcon, { opacity: 1, scale: 1, duration: 0.6, ease: 'power2.out' })
+  solTl.to(shimmer, { backgroundPositionX: '100%', duration: 1.2, ease: 'power1.inOut' })
+      .to(questionUnderline, { width: '56%', opacity: 1, duration: 0.6, ease: 'power2.out' }, '-=0.6')
+      .to(mapIcon, { opacity: 1, scale: 1, duration: 0.6, ease: 'power2.out' }, '-=0.2')
       .to(methodTagline, { opacity: 1, duration: 0.6 }, '-=0.2')
+
+  // SVG route draw and POI pulse
+  gsap.to('.route', {
+    scrollTrigger: { trigger: '#solution', start: 'top 40%', end: 'center 20%', scrub: true },
+    strokeDashoffset: 0,
+    ease: 'none'
+  })
+  gsap.fromTo('.poi', { scale: 0.6, opacity: 0.6 }, {
+    scrollTrigger: { trigger: '#solution', start: 'top 40%', end: 'center 20%', scrub: true },
+    scale: 1,
+    opacity: 1,
+    ease: 'power2.out'
+  })
 }
 
 // 4) Sizes: pin and step through S -> M -> L
