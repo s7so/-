@@ -191,6 +191,18 @@ body {
     linear-gradient(rgba(2,6,23,0.92), rgba(2,6,23,0.92)) padding-box,
     linear-gradient(135deg, #64748b, #cbd5e1) border-box;
 }
+.social.youtube:hover {
+  color: #ff0033;
+  background:
+    linear-gradient(rgba(2,6,23,0.92), rgba(2,6,23,0.92)) padding-box,
+    linear-gradient(135deg, #ff0033, #ff6b6b) border-box;
+}
+.social.tiktok:hover {
+  color: #00f2ea;
+  background:
+    linear-gradient(rgba(2,6,23,0.92), rgba(2,6,23,0.92)) padding-box,
+    linear-gradient(135deg, #00f2ea, #ff0050) border-box;
+}
 .social.email:hover {
   color: #f43f5e;
   background:
