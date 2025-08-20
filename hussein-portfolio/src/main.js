@@ -172,6 +172,16 @@ if (!prefersReduced) {
   }
 }
 
+// Blur-up ready state for images
+const lazyImgs = Array.from(document.querySelectorAll('.work-img'))
+lazyImgs.forEach((img) => {
+  if (img.complete) {
+    img.classList.add('is-ready')
+  } else {
+    img.addEventListener('load', () => img.classList.add('is-ready'), { once: true })
+  }
+})
+
 // Filters
 const filterChips = Array.from(document.querySelectorAll('.filter-chip'))
 const workCards = Array.from(document.querySelectorAll('.work-card'))
