@@ -147,12 +147,15 @@ if (!prefersReduced) {
 
 // 6) CTA: stagger in socials
 if (!prefersReduced) {
-  gsap.from('.social', {
-    scrollTrigger: { trigger: '#contact', start: 'top 80%' },
-    scale: 0.8,
-    opacity: 0,
-    stagger: 0.08,
-    duration: 0.4,
-    ease: 'power2.out'
-  })
+  gsap.fromTo('.social',
+    { y: 8, opacity: 0 },
+    {
+      scrollTrigger: { trigger: '#contact', start: 'top 80%' },
+      y: 0,
+      opacity: 1,
+      stagger: 0.08,
+      duration: 0.45,
+      ease: 'power2.out'
+    }
+  )
 }
