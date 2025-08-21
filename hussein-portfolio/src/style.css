@@ -225,6 +225,11 @@ body {
 .inventory, .matrix, .signoff { width: 100%; border-collapse: collapse; }
 .inventory th, .inventory td, .matrix th, .matrix td, .signoff td { border-bottom: 1px solid rgba(148,163,184,0.18); padding: 8px; text-align: left; font-size: 13px; }
 .inventory code { background: rgba(148,163,184,0.12); padding: 2px 6px; border-radius: 6px; }
+
+/* Flowchart show */
+.flowchart-show { display: grid; gap: 8px; justify-items: center; margin: 8px 0 12px; }
+.flowchart-show img { width: min(960px, 100%); height: auto; border-radius: 12px; border: 1px solid rgba(148,163,184,0.25); box-shadow: 0 10px 30px rgba(0,0,0,0.25); background: #0b0f19; }
+.flow-actions { display: flex; gap: 8px; }
 .codeblock { margin: 8px 0 0; background: rgba(2,6,23,0.5); border: 1px solid rgba(148,163,184,0.2); border-radius: 10px; padding: 10px 12px; overflow: auto; }
 .cta .container { text-align: center; }
 .cta h2 { font-size: clamp(22px, 4vw, 40px); margin: 0 0 18px; }
