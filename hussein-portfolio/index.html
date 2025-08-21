@@ -82,6 +82,7 @@
             <button class="phase-chip active" role="tab" aria-selected="true" data-phase="0">Phase 0 — Project Setup</button>
             <button class="phase-chip" role="tab" aria-selected="false" data-phase="1">Phase 1 — Idea Autopsy</button>
             <button class="phase-chip" role="tab" aria-selected="false" data-phase="2">Phase 2 — Data Mindset</button>
+            <button class="phase-chip" role="tab" aria-selected="false" data-phase="3">Phase 3 — Flowchart</button>
           </div>
 
           <div class="phase-panel active" data-phase="0">
@@ -415,6 +416,192 @@
                     <li><code>docs/roles-and-raci.md</code> (مفصّل إن احتجت).</li>
                     <li><code>templates/prioritization/rice-template.md</code> (حيث تحسب RICE لكل backlog item).</li>
                     <li><code>security/snyk-dependabot.md</code> (خطوات تشغيل SCA).</li>
+                  </ul>
+                </section>
+              </div>
+            </div>
+          </div>
+          <div class="phase-panel" data-phase="3">
+            <div class="phase-header">
+              <div class="phase-badge">Phase 3</div>
+              <h3 class="phase-heading">Flowchart (رسم خريطة الطريق)</h3>
+              <div class="phase-chip subtle">Visual flows + Traceability</div>
+            </div>
+
+            <div class="phase-grid">
+              <aside class="phase-nav" aria-label="Phase 3 sections">
+                <nav>
+                  <a href="#f30">3.0 – Deliverables</a>
+                  <a href="#f31">3.1 – Flowchart Template</a>
+                  <a href="#f32">3.2 – Example: US‑01</a>
+                  <a href="#f33">3.3 – Decision Matrix</a>
+                  <a href="#f34">3.4 – Traceability Mapping</a>
+                  <a href="#f35">3.5 – Tools</a>
+                  <a href="#f36">3.6 – Mapping to Testing</a>
+                  <a href="#f37">3.7 – Ownership & Workflow</a>
+                  <a href="#f38">3.8 – Time‑Box</a>
+                  <a href="#f39">3.9 – DoR</a>
+                  <a href="#f310">3.10 – DoD</a>
+                </nav>
+              </aside>
+
+              <div class="phase-content">
+                <section class="phase-card" id="f30" aria-labelledby="f30-h">
+                  <h4 id="f30-h" class="phase-card-title">3.0 – مخرجات Phase‑3 (قابل للنسخ)</h4>
+                  <ul class="bullets">
+                    <li><code>docs/flowcharts/us-01-add-expense.drawio</code></li>
+                    <li><code>docs/flowcharts/us-01-add-expense.svg</code></li>
+                    <li><code>docs/phase-3-flowchart.md</code></li>
+                    <li>Mapping: <code>docs/traceability/flow-to-pseudocode.md</code></li>
+                  </ul>
+                </section>
+
+                <section class="phase-card" id="f31" aria-labelledby="f31-h">
+                  <h4 id="f31-h" class="phase-card-title">3.1 – قالب Flowchart (نقاط أساسية)</h4>
+                  <ul class="bullets">
+                    <li><strong>Start / End</strong>: دائرتان.</li>
+                    <li><strong>Process</strong>: مربع للخطوات.</li>
+                    <li><strong>Decision</strong>: Diamond لفرعين Yes/No.</li>
+                    <li><strong>External / API</strong>: شكل مائل أو قاعدة بيانات.</li>
+                    <li><strong>Error path</strong>: لون مختلف مع retry/logging/toast.</li>
+                  </ul>
+                  <ul class="bullets">
+                    <li>كل Decision يوضح شرطه كتابيًا (مثل: <code>is_amount_valid?</code>).</li>
+                    <li>أظهر Owner للمسار عند الحاجة (→ Dev/QA).</li>
+                    <li>اربط كل node بـ Issue/PR (مثل: <code>#123</code>).</li>
+                  </ul>
+                </section>
+
+                <section class="phase-card" id="f32" aria-labelledby="f32-h">
+                  <h4 id="f32-h" class="phase-card-title">3.2 – مثال: US‑01 (Add Expense)</h4>
+                  <ol>
+                    <li><strong>Start</strong> → [Open AddExpenseModal] → [User Enters Data]</li>
+                    <li>→ [Validate Input]
+                      <ul class="bullets">
+                        <li>❌ Invalid → [Show ValidationErrorToast] → (End)</li>
+                        <li>✅ Valid → [Call API POST /expenses]</li>
+                      </ul>
+                    </li>
+                    <li>→ [API Response?]
+                      <ul class="bullets">
+                        <li>❌ 5xx/network → [Retry up to 3] → إذا فشل → [Log Error & Show SystemErrorToast] → (End)</li>
+                        <li>✅ 200 → [Show SuccessToast] → [Refresh List / Update Cache] → (End)</li>
+                      </ul>
+                    </li>
+                  </ol>
+                  <p><strong>Decision Points</strong></p>
+                  <ul class="bullets">
+                    <li><code>Validate Input</code>: جميع الحقول صالحة؟ (owner = Dev/QA)</li>
+                    <li><code>API Response</code>: <code>status == 200</code>? (owner = SRE/DevOps)</li>
+                  </ul>
+                  <p><strong>Error branches</strong></p>
+                  <ul class="bullets">
+                    <li>Validation: عرض أخطاء + focus على الحقول.</li>
+                    <li>API: Retry لخطأ شبكي؛ إن فشل، إنشاء Issue تلقائيًا (sentry).</li>
+                  </ul>
+                </section>
+
+                <section class="phase-card" id="f33" aria-labelledby="f33-h">
+                  <h4 id="f33-h" class="phase-card-title">3.3 – Decision Matrix & Escalation Rules</h4>
+                  <div class="table-wrap">
+                    <table class="matrix">
+                      <thead>
+                        <tr><th>Decision Point</th><th>Condition</th><th>Yes →</th><th>No →</th><th>Owner</th><th>Escalation</th></tr>
+                      </thead>
+                      <tbody>
+                        <tr><td>Validate Input</td><td>all fields valid</td><td>Call API</td><td>Show validation</td><td>Dev/QA</td><td>If ambiguous → PO within 24h</td></tr>
+                        <tr><td>API stable?</td><td>error rate > threshold</td><td>Investigate infra</td><td>retry</td><td>SRE</td><td>If >1h → escalate to Tech Lead</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <p class="note">أي قرار يؤثر DoD/SLO يحتاج موافقة Tech Lead + SRE. خلافات المتطلبات تُرفع إلى PO خلال 24 ساعة.</p>
+                </section>
+
+                <section class="phase-card" id="f34" aria-labelledby="f34-h">
+                  <h4 id="f34-h" class="phase-card-title">3.4 – ربط Flowcharts بالـ Pseudo‑code وTests</h4>
+                  <p>عيّن معرفًا فريدًا لكل node، ثم اربطه بملفات pseudo‑code وBDD.</p>
+                  <div class="table-wrap">
+                    <table class="inventory">
+                      <thead>
+                        <tr><th>Node ID</th><th>Node Label</th><th>Linked File</th><th>Linked Line/Section</th></tr>
+                      </thead>
+                      <tbody>
+                        <tr><td>N1</td><td>Open Add Modal</td><td><code>docs/pseudocode/add_expense.md</code></td><td>Section 1.0</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
+
+                <section class="phase-card" id="f35" aria-labelledby="f35-h">
+                  <h4 id="f35-h" class="phase-card-title">3.5 – أدوات ورسومات مقترحة</h4>
+                  <ul class="bullets">
+                    <li><strong>draw.io / diagrams.net</strong> — حفظ <code>.drawio</code>/<code>svg</code>/<code>png</code>.</li>
+                    <li><strong>PlantUML</strong> — نصي وقابل للنسخ.</li>
+                  </ul>
+                  <pre class="codeblock"><code>@startuml
+start
+:Open Add Modal;
+:Validate Input;
+if (valid?) then (yes)
+  :Call API /expenses;
+  if (200?) then (yes)
+    :Show Success;
+  else (no)
+    :Show System Error;
+  endif
+else (no)
+  :Show Validation Error;
+endif
+stop
+@enduml</code></pre>
+                </section>
+
+                <section class="phase-card" id="f36" aria-labelledby="f36-h">
+                  <h4 id="f36-h" class="phase-card-title">3.6 – Mapping to Testing (BDD + Unit)</h4>
+                  <pre class="codeblock"><code>Scenario: Add expense fails due to API error
+  Given the user has valid expense data
+  When the API returns 500
+  Then the user sees a system error toast
+  And no new expense is added</code></pre>
+                  <p class="note">اربط كل Scenario بملف اختبار Unit/Integration وتشغيله في CI.</p>
+                </section>
+
+                <section class="phase-card" id="f37" aria-labelledby="f37-h">
+                  <h4 id="f37-h" class="phase-card-title">3.7 – Ownership & Workflow</h4>
+                  <ol>
+                    <li>رسم المخطط: Designer/PO + Dev (مسؤول).</li>
+                    <li>مراجعة: Tech Lead + QA (15 دقيقة).</li>
+                    <li>Security flows: Security Reviewer (threat modelling عند الحاجة).</li>
+                    <li>Sign‑off: PO + Tech Lead (وثّق في <code>docs/signoffs.md</code>).</li>
+                  </ol>
+                </section>
+
+                <section class="phase-card" id="f38" aria-labelledby="f38-h">
+                  <h4 id="f38-h" class="phase-card-title">3.8 – Time‑Box</h4>
+                  <ul class="bullets">
+                    <li>اختيار User Story + رسم أولي: <strong>15–30 دقيقة</strong>.</li>
+                    <li>إتمام مخططات لكل قصة: <strong>20–30 دقيقة / story</strong>.</li>
+                    <li>مراجعة وSign‑off: <strong>15 دقيقة</strong>.</li>
+                  </ul>
+                </section>
+
+                <section class="phase-card" id="f39" aria-labelledby="f39-h">
+                  <h4 id="f39-h" class="phase-card-title">3.9 – Definition of Ready (DoR)</h4>
+                  <ul class="checklist">
+                    <li>كل User Story لديها Flowchart مع كل Decision واضح.</li>
+                    <li>كل node مربوط بـ pseudo‑code أو test أو issue.</li>
+                    <li>Ownership وEscalation rules موثوقة.</li>
+                    <li>Export SVG/PNG مخزن في <code>docs/flowcharts/</code>.</li>
+                  </ul>
+                </section>
+
+                <section class="phase-card" id="f310" aria-labelledby="f310-h">
+                  <h4 id="f310-h" class="phase-card-title">3.10 – Definition of Done (DoD)</h4>
+                  <ul class="checklist">
+                    <li>المخططات مرفوعة بصيغة المصدر وصيغ الصور.</li>
+                    <li>لكل Decision owner ووقت استجابة.</li>
+                    <li>كل node مربوط بـ pseudo‑code و/أو BDD scenarios.</li>
+                    <li>مراجعة أمان إذا كانت الـ flow تتعامل مع PII أو عمليات حساسة.</li>
                   </ul>
                 </section>
               </div>
